@@ -1,0 +1,24 @@
+.add_note input{
+    line-height: 2rem;
+    width: 60%;
+    border-radius: 5px;
+    border-color: #ccc7c7;
+}
+.add_note button{
+    line-height: 2.3rem;
+    width: 15%;
+    margin-left: 2px;
+    background-color: rgba(62, 62, 245, 0.852);
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+
+}
+.add_note select{
+    height: 2rem;
+    margin:0 1px 0 3px;
+    width: 20%;
+    border-radius: 5px;
+}

@@ -1,0 +1,12 @@
+import './note.css';
+import { NoteProps } from './note-type';
+
+function Note(props:NoteProps) {
+  return (
+    <div className={`note ${props.priorities}`}>
+        {props.text}
+    </div>
+  )
+}
+
+export default Note;
