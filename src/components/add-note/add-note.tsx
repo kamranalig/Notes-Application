@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NoteType, Priority } from '../Note/note-type';
 import { v4 as uuidv4 } from 'uuid';
 import './add-note.css';
+import Card from '../card/card';
 
 // added type of props
 type AddNoteProps = {
@@ -23,11 +24,15 @@ function AddNote(props: AddNoteProps) {
 // handleClick function
     const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
+
+//  adding props to addNotes funtion
         props.addNote({
             text,
             priorities,
             id: uuidv4()
         })
+
+// reset the value of input and select box
         setText("");
         setPriorities("low");
     }
@@ -39,7 +44,9 @@ function AddNote(props: AddNoteProps) {
 
 // return jsx of main function
     return (
-        <div>
+        <Card
+        height='2'
+        padding='1'>
             <form className="add_note">
                 <input type="text" onChange={handleChange} value={text}/>
                 <select onChange={handleSelect} value={priorities}>
@@ -49,7 +56,7 @@ function AddNote(props: AddNoteProps) {
                 </select>
                 <button onClick={handleClick}>Add</button>
             </form>
-        </div>
+        </Card>
     )
 }
 export default AddNote;
