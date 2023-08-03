@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NoteType, Priority } from '../Note/note-type';
 import { v4 as uuidv4 } from 'uuid';
 import './add-note.css';
@@ -6,7 +6,10 @@ import Card from '../card/card';
 
 // added type of props
 type AddNoteProps = {
-    addNote: (note: NoteType) => void
+    addNote: (note: NoteType) => void,
+    editMode:boolean,
+    noteToBeEditted : NoteType | null, 
+    updateNote: (updatedNote: NoteType) => void,
 }
 
 // main function
@@ -20,18 +23,41 @@ function AddNote(props: AddNoteProps) {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value);
     }
+    const setNoteContent = (note:NoteType) => {
+        setText(note.text);
+        setPriorities(note.priorities);
+    }
+
+    useEffect(() => {
+        if(props.noteToBeEditted && props.editMode){
+            setNoteContent(props.noteToBeEditted);
+        }
+    
+    }, [props.noteToBeEditted, props.editMode])
+    
 
 // handleClick function
     const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
 
-//  adding props to addNotes funtion
-        props.addNote({
-            text,
-            priorities,
-            id: uuidv4()
-        })
+        if(props.editMode){
+         props.noteToBeEditted &&  props.updateNote({
+                text,
+                priorities,
+                id: props.noteToBeEditted.id
+            })
+        }
+        else{
+     //  adding props to addNotes funtion
+            props.addNote({
+                text,
+                priorities,
+                id: uuidv4()
+            })
+    
+        }
 
+       
 // reset the value of input and select box
         setText("");
         setPriorities("low");
@@ -54,7 +80,7 @@ function AddNote(props: AddNoteProps) {
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                 </select>
-                <button onClick={handleClick}>Add</button>
+                <button onClick={handleClick}>{props.editMode ? 'Edit' : 'Add'}</button>
             </form>
         </Card>
     )
